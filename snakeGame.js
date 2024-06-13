@@ -21,6 +21,23 @@ let food = {
     y: Math.floor(Math.random() * 15 + 1) * box
 }
 
+// Define los obstáculos
+let obstacles = [
+    {x: 3 * box, y: 3 * box},
+    {x: 5 * box, y: 7 * box},
+    {x: 9 * box, y: 4 * box},
+    // Añade más obstáculos aquí
+];
+
+// Función para dibujar los obstáculos
+function drawObstacles() {
+    for(let i = 0; i < obstacles.length; i++) {
+        context.fillStyle = "grey";
+        context.fillRect(obstacles[i].x, obstacles[i].y, box, box);
+    }
+}
+
+
 // Función para dibujar el fondo del juego
 function createBG() {
     context.fillStyle = "lightgreen";
@@ -71,7 +88,7 @@ function startGame() {
     createBG();
     createSnake();
     drawFood();
-
+    drawObstacles();
     // Define la nueva posición de la serpiente
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
@@ -81,7 +98,12 @@ function startGame() {
     if(direction == "left") snakeX -= box;
     if(direction == "up") snakeY -= box;
     if(direction == "down") snakeY += box;
-
+    for(let i = 0; i < obstacles.length; i++) {
+        if(snake[0].x == obstacles[i].x && snake[0].y == obstacles[i].y) {
+            clearInterval(game);
+            alert('Game Over :(');
+        }
+    }
     // Si la serpiente come la comida, genera una nueva comida en una posición aleatoria
     // Si no, quita el último elemento de la serpiente (la mueve)
     if(snakeX != food.x || snakeY != food.y) {
