@@ -11,6 +11,9 @@ snake[0] = {
     x: 8 * box,
     y: 8 * box
 }
+// Inicializa la puntuación
+let score = 0;
+
 
 // Define la dirección inicial de la serpiente
 let direction = "right";
@@ -37,7 +40,6 @@ function drawObstacles() {
     }
 }
 
-
 // Función para dibujar el fondo del juego
 function createBG() {
     context.fillStyle = "lightgreen";
@@ -51,6 +53,11 @@ function createSnake() {
         context.fillRect(snake[i].x, snake[i].y, box, box);
     }
 }
+// Función para actualizar la puntuación en el HTML
+function updateScore() {
+    document.getElementById('score').innerText = "Score: " + score;
+}
+
 
 // Función para dibujar la comida
 function drawFood() {
@@ -83,6 +90,7 @@ function startGame() {
             alert('Game Over :(');
         }
     }
+    
 
     // Dibuja el fondo, la serpiente y la comida
     createBG();
@@ -111,6 +119,8 @@ function startGame() {
     } else {
         food.x = Math.floor(Math.random() * 15 + 1) * box;
         food.y = Math.floor(Math.random() * 15 + 1) * box;
+        score++; // Incrementa la puntuación
+    updateScore(); // Actualiza la puntuación en el HTMLHi 
     }
 
     // Añade un nuevo elemento al frente de la serpiente (la mueve)
